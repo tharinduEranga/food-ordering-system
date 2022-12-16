@@ -7,6 +7,7 @@ import com.foodordering.system.domain.valueobject.RestaurantId;
 import com.foodordering.system.order.service.domain.dto.create.CreateOrderCommand;
 import com.foodordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.foodordering.system.order.service.domain.dto.create.OrderAddress;
+import com.foodordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.foodordering.system.order.service.domain.entity.Order;
 import com.foodordering.system.order.service.domain.entity.OrderItem;
 import com.foodordering.system.order.service.domain.entity.Product;
@@ -46,6 +47,14 @@ public class OrderDataMapper {
         return CreateOrderResponse.builder()
                 .orderTrackingId(orderResult.getTrackingId().getValue())
                 .orderStatus(orderResult.getOrderStatus())
+                .build();
+    }
+
+    public TrackOrderResponse orderToTrackOrderResponse(Order order) {
+        return TrackOrderResponse.builder()
+                .orderTrackingId(order.getTrackingId().getValue())
+                .orderStatus(order.getOrderStatus())
+                .failureMessages(order.getFailureMessages())
                 .build();
     }
 
