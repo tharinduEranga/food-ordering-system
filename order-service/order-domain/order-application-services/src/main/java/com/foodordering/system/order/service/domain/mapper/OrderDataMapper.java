@@ -43,10 +43,11 @@ public class OrderDataMapper {
                 .build();
     }
 
-    public CreateOrderResponse orderToCreateOrderResponse(Order orderResult) {
+    public CreateOrderResponse orderToCreateOrderResponse(Order orderResult, String message) {
         return CreateOrderResponse.builder()
                 .orderTrackingId(orderResult.getTrackingId().getValue())
                 .orderStatus(orderResult.getOrderStatus())
+                .message(message)
                 .build();
     }
 
@@ -58,6 +59,14 @@ public class OrderDataMapper {
                 .build();
     }
 
+    public Restaurant createOrderCommandToRestaurant(CreateOrderCommand createOrderCommand) {
+        return Restaurant.builder()
+                .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
+                .active(true)
+                .products(orderItemsToProducts(createOrderCommand.getItems()))
+                .build();
+    }
+
     private List<OrderItem> orderItemsToOrderItemEntities(List<com.foodordering.system.order.service.domain.dto.create.OrderItem> orderItems) {
         return orderItems.stream()
                 .map(orderItem -> OrderItem.builder()
@@ -66,6 +75,13 @@ public class OrderDataMapper {
                         .qty(orderItem.getQuantity())
                         .subTotal(new Money(orderItem.getSubTotal()))
                         .build())
+                .collect(Collectors.toList());
+    }
+
+    private List<Product> orderItemsToProducts(List<com.foodordering.system.order.service.domain.dto.create.OrderItem> orderItems) {
+        return orderItems
+                .stream()
+                .map(orderItem -> new Product(new ProductId(orderItem.getProductId())))
                 .collect(Collectors.toList());
     }
 
