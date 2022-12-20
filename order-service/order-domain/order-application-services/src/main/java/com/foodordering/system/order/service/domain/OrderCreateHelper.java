@@ -1,6 +1,5 @@
-package com.foodordering.system.order.service.domain.dto;
+package com.foodordering.system.order.service.domain;
 
-import com.foodordering.system.order.service.domain.OrderDomainService;
 import com.foodordering.system.order.service.domain.dto.create.CreateOrderCommand;
 import com.foodordering.system.order.service.domain.entity.Customer;
 import com.foodordering.system.order.service.domain.entity.Order;

@@ -1,6 +1,7 @@
 package com.foodordering.system.order.service.domain;
 
 import com.foodordering.system.order.service.domain.entity.Order;
+import com.foodordering.system.order.service.domain.entity.OrderItem;
 import com.foodordering.system.order.service.domain.entity.Product;
 import com.foodordering.system.order.service.domain.entity.Restaurant;
 import com.foodordering.system.order.service.domain.event.OrderCancelledEvent;
@@ -11,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class OrderDomainServiceImpl implements OrderDomainService {
@@ -64,13 +67,19 @@ public class OrderDomainServiceImpl implements OrderDomainService {
 
     private void setOrderProductInformation(Order order, Restaurant restaurant) {
         /*optimize the method to linear complexity by introducing a new data structure*/
-        order.getItems().forEach(orderItem -> restaurant.getProducts().forEach(restaurantProduct -> {
-            Product currentProduct = orderItem.getProduct();
-            if (currentProduct.equals(restaurantProduct)) {
+        Map<Product, Product> restaurantProducts = restaurant.getProducts().stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        restaurantProduct -> restaurantProduct,
+                        (a, b) -> b)
+                );
+        order.getItems().stream().map(OrderItem::getProduct).forEach(currentProduct -> {
+            Product restaurantProduct = restaurantProducts.get(currentProduct);
+            if (restaurantProduct != null) {
                 currentProduct.updateWithConfirmedNameAndPrice(
                         restaurantProduct.getName(),
                         restaurantProduct.getPrice());
             }
-        }));
+        });
     }
 }
