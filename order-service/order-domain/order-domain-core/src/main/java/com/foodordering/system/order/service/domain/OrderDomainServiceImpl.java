@@ -66,7 +66,6 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     }
 
     private void setOrderProductInformation(Order order, Restaurant restaurant) {
-        /*optimize the method to linear complexity by introducing a new data structure*/
         Map<Product, Product> restaurantProducts = restaurant.getProducts().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
