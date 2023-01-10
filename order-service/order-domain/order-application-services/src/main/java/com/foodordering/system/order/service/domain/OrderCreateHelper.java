@@ -1,5 +1,6 @@
 package com.foodordering.system.order.service.domain;
 
+import com.foodordering.system.domain.event.publisher.DomainEventPublisher;
 import com.foodordering.system.order.service.domain.dto.create.CreateOrderCommand;
 import com.foodordering.system.order.service.domain.entity.Customer;
 import com.foodordering.system.order.service.domain.entity.Order;
@@ -31,15 +32,17 @@ public class OrderCreateHelper {
     private final RestaurantRepository restaurantRepository;
 
     private final OrderDataMapper orderDataMapper;
+    private final DomainEventPublisher<OrderCreatedEvent> orderCreatedEventDomainEventPublisher;
 
     @Transactional
     public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
         checkCustomer(createOrderCommand.getCustomerId());
         Restaurant restaurant = checkRestaurant(createOrderCommand);
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
-        OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant);
+        OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant,
+                orderCreatedEventDomainEventPublisher);
         Order orderResult = saveOrder(order);
-        log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
+        log.info("Order is saved with id: {} db id: {}", order.getId().getValue(), orderResult.getId().getValue());
         return orderCreatedEvent;
     }
 
@@ -65,10 +68,9 @@ public class OrderCreateHelper {
     private Order saveOrder(Order order) {
         Order orderResult = orderRepository.save(order);
         if (orderResult == null) {
-            log.error("Order save failed with id: {}", order.getId());
+            log.error("Order save failed with id: {}", order.getId().getValue());
             throw new OrderDomainException("Could not save order!");
         }
-        log.info("Order is saved with id: {}", order.getId());
         return orderResult;
     }
 
