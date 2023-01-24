@@ -91,16 +91,17 @@ public class PaymentRequestHelper {
         List<String> failureMessages = new ArrayList<>();
         PaymentEvent paymentEvent = paymentEventExecutor
                 .execute(payment, creditEntry, creditHistories, failureMessages);
-        return persistDbObjects(creditEntry, creditHistories, failureMessages, paymentEvent);
+        persistDbObjects(payment, creditEntry, creditHistories, failureMessages);
+        return paymentEvent;
     }
 
-    private PaymentEvent persistDbObjects(CreditEntry creditEntry, List<CreditHistory> creditHistories,
-                                          List<String> failureMessages, PaymentEvent paymentEvent) {
+    private void persistDbObjects(Payment payment, CreditEntry creditEntry,
+                                  List<CreditHistory> creditHistories, List<String> failureMessages) {
+        paymentRepository.save(payment);
         if (failureMessages.isEmpty()) {
             creditEntryRepository.save(creditEntry);
             creditHistoryRepository.save(creditHistories.get(creditHistories.size() - 1));
         }
-        return paymentEvent;
     }
 
 }

@@ -3,7 +3,7 @@ package com.foodordering.system.order.service.dataaccess.order.entity;
 import com.foodordering.system.domain.valueobject.OrderStatus;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -38,8 +38,7 @@ public class OrderEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof OrderEntity)) return false;
-        OrderEntity that = (OrderEntity) o;
+        if (!(o instanceof OrderEntity that)) return false;
         return id.equals(that.id);
     }
 

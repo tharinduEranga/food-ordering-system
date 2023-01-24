@@ -10,7 +10,7 @@ import com.foodordering.system.order.service.domain.valueobject.TrackingId;
 import java.util.List;
 import java.util.UUID;
 
-public class Order extends AggregateRoot<OrderId<UUID>> {
+public class Order extends AggregateRoot<OrderId> {
     public static final String FAILURE_MESSAGE_DELIMITER = ",";
 
     private final CustomerId customerId;
@@ -36,7 +36,7 @@ public class Order extends AggregateRoot<OrderId<UUID>> {
     }
 
     public void initializeOrder() {
-        setId(new OrderId<>(UUID.randomUUID()));
+        setId(new OrderId(UUID.randomUUID()));
         trackingId = new TrackingId(UUID.randomUUID());
         orderStatus = OrderStatus.PENDING;
         initializeOrderItems();
@@ -164,7 +164,7 @@ public class Order extends AggregateRoot<OrderId<UUID>> {
     }
 
     public static final class Builder {
-        private OrderId<UUID> orderId;
+        private OrderId orderId;
         private CustomerId customerId;
         private RestaurantId restaurantId;
         private StreetAddress deliveryAddress;
@@ -177,7 +177,7 @@ public class Order extends AggregateRoot<OrderId<UUID>> {
         private Builder() {
         }
 
-        public Builder id(OrderId<UUID> val) {
+        public Builder id(OrderId val) {
             orderId = val;
             return this;
         }

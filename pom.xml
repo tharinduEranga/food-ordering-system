@@ -11,12 +11,13 @@
         <module>customer-service</module>
         <module>restaurant-service</module>
         <module>payment-service</module>
+        <module>infrastructure/saga</module>
     </modules>
 
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>2.6.7</version>
+        <version>3.0.2</version>
         <relativePath/> <!--set empty for external projects. use only for local parents-->
     </parent>
 
@@ -28,9 +29,9 @@
 
     <properties>
         <maven-compiler-plugin-version>3.9.0</maven-compiler-plugin-version>
-        <spring-kafka.version>2.8.2</spring-kafka.version>
+        <spring-kafka.version>3.0.2</spring-kafka.version>
         <kafka-avro-serializer.version>7.0.1</kafka-avro-serializer.version>
-        <avro.version>1.11.0</avro.version>
+        <avro.version>1.11.1</avro.version>
     </properties>
 
     <dependencyManagement> <!--unifies the versions for dependencies in the child modules-->
@@ -133,6 +134,11 @@
             <dependency>
                 <groupId>com.foodordering.system</groupId>
                 <artifactId>common-dataaccess</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.foodordering.system</groupId>
+                <artifactId>saga</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

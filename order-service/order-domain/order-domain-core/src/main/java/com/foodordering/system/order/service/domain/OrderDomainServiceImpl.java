@@ -42,7 +42,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
 
     @Override
     public void approveOrder(Order order) {
-        order.pay();
+        order.approve();
         log.info("Order with id: {} is approved", order.getId().getValue());
     }
 
@@ -78,11 +78,13 @@ public class OrderDomainServiceImpl implements OrderDomainService {
                 );
         order.getItems().stream().map(OrderItem::getProduct).forEach(currentProduct -> {
             Product restaurantProduct = restaurantProducts.get(currentProduct);
-            if (restaurantProduct != null) {
-                currentProduct.updateWithConfirmedNameAndPrice(
-                        restaurantProduct.getName(),
-                        restaurantProduct.getPrice());
+            if (restaurantProduct == null) {
+                throw new OrderDomainException("Product with id: " + currentProduct.getId().getValue() +
+                        " is not associated with restaurant: " + restaurant.getId().getValue());
             }
+            currentProduct.updateWithConfirmedNameAndPrice(
+                    restaurantProduct.getName(),
+                    restaurantProduct.getPrice());
         });
     }
 }

@@ -6,13 +6,11 @@ import com.foodordering.system.domain.valueobject.OrderId;
 import com.foodordering.system.domain.valueobject.RestaurantId;
 import com.foodordering.system.restaurant.service.domain.valueobject.OrderApprovalId;
 
-import java.util.UUID;
-
 public class OrderApproval extends BaseEntity<OrderApprovalId> {
     private final RestaurantId restaurantId;
     private final OrderApprovalId orderApprovalId;
     private final OrderApprovalStatus approvalStatus;
-    private final OrderId<UUID> orderId;
+    private final OrderId orderId;
 
     private OrderApproval(Builder builder) {
         super.setId(builder.orderApprovalId);
@@ -30,7 +28,7 @@ public class OrderApproval extends BaseEntity<OrderApprovalId> {
         return restaurantId;
     }
 
-    public OrderId<UUID> getOrderId() {
+    public OrderId getOrderId() {
         return orderId;
     }
 
@@ -46,7 +44,7 @@ public class OrderApproval extends BaseEntity<OrderApprovalId> {
         private OrderApprovalId orderApprovalId;
         private RestaurantId restaurantId;
         private OrderApprovalStatus approvalStatus;
-        private OrderId<UUID> orderId;
+        private OrderId orderId;
 
         private Builder() {
         }
@@ -67,7 +65,7 @@ public class OrderApproval extends BaseEntity<OrderApprovalId> {
             return this;
         }
 
-        public Builder orderId(OrderId<UUID> val) {
+        public Builder orderId(OrderId val) {
             orderId = val;
             return this;
         }

@@ -6,9 +6,8 @@ import com.foodordering.system.domain.valueobject.OrderId;
 import com.foodordering.system.domain.valueobject.OrderStatus;
 
 import java.util.List;
-import java.util.UUID;
 
-public class OrderDetail extends BaseEntity<OrderId<UUID>> {
+public class OrderDetail extends BaseEntity<OrderId> {
     private OrderStatus orderStatus;
     private Money totalAmount;
     private final List<Product> products;
@@ -37,7 +36,7 @@ public class OrderDetail extends BaseEntity<OrderId<UUID>> {
     }
 
     public static final class Builder {
-        private OrderId<UUID> orderId;
+        private OrderId orderId;
         private OrderStatus orderStatus;
         private Money totalAmount;
         private List<Product> products;
@@ -46,7 +45,7 @@ public class OrderDetail extends BaseEntity<OrderId<UUID>> {
         }
 
 
-        public Builder orderId(OrderId<UUID> val) {
+        public Builder orderId(OrderId val) {
             orderId = val;
             return this;
         }

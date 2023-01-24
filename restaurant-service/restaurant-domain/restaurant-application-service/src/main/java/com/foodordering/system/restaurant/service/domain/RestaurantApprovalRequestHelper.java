@@ -59,7 +59,7 @@ public class RestaurantApprovalRequestHelper {
                 }
             });
         });
-        restaurant.getOrderDetail().setId(new OrderId<>(UUID.fromString(restaurantApprovalRequest.getOrderId())));
+        restaurant.getOrderDetail().setId(new OrderId(UUID.fromString(restaurantApprovalRequest.getOrderId())));
         return restaurant;
     }
 }

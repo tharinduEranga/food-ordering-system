@@ -5,7 +5,7 @@ import com.foodordering.system.order.service.domain.dto.create.CreateOrderRespon
 import com.foodordering.system.order.service.domain.dto.track.TrackOrderQuery;
 import com.foodordering.system.order.service.domain.dto.track.TrackOrderResponse;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 public interface OrderApplicationService {
 

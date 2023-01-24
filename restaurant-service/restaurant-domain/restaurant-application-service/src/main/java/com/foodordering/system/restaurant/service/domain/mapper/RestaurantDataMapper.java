@@ -21,11 +21,12 @@ public class RestaurantDataMapper {
         return Restaurant.builder()
                 .restaurantId(new RestaurantId(UUID.fromString(restaurantApprovalRequest.getRestaurantId())))
                 .orderDetail(OrderDetail.builder()
-                        .orderId(new OrderId<>(UUID.fromString(restaurantApprovalRequest.getOrderId())))
+                        .orderId(new OrderId(UUID.fromString(restaurantApprovalRequest.getOrderId())))
                         .products(restaurantApprovalRequest.getProducts().stream().map(
                                 product -> Product.builder()
                                         .productId(product.getId())
                                         .quantity(product.getQuantity())
+                                        .available(product.isAvailable())
                                         .build()
                         ).collect(Collectors.toList()))
                         .totalAmount(new Money(restaurantApprovalRequest.getPrice()))

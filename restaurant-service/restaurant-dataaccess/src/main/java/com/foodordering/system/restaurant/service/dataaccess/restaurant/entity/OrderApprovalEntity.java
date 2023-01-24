@@ -3,7 +3,7 @@ package com.foodordering.system.restaurant.service.dataaccess.restaurant.entity;
 import com.foodordering.system.domain.valueobject.OrderApprovalStatus;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.UUID;
 
 @Getter

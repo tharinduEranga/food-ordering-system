@@ -1,8 +1,10 @@
 package com.foodordering.system.domain.valueobject;
 
-public class OrderId<T> extends BaseId<T> {
+import java.util.UUID;
 
-    public OrderId(T value) {
+public class OrderId extends BaseId<UUID> {
+
+    public OrderId(UUID value) {
         super(value);
     }
 }
